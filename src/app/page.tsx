@@ -1,7 +1,16 @@
+import '@digdir/designsystemet-css/index.css'
+import '@digdir/designsystemet-theme'
+
+import { Search } from '@digdir/designsystemet-react';
+
 export default function Home() {
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
-  );
+    <>
+      <Search>
+        <Search.Input aria-label='Søk' />
+        <Search.Clear />
+        <Search.Button />
+      </Search>
+    </>
+  )
 }

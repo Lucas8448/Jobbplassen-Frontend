@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@digdir/designsystemet-css": "^1.7.1",
+    "@digdir/designsystemet-react": "^1.7.1",
     "@digdir/designsystemet-theme": "^1.7.1",
     "next": "16.0.0",
     "react": "19.2.0",
