@@ -11,8 +11,6 @@
   "dependencies": {
     "@digdir/designsystemet-css": "^1.7.0",
     "@digdir/designsystemet-theme": "^1.7.0",
-    "@navikt/ds-css": "^7.32.3",
-    "@navikt/ds-react": "^7.32.3",
     "next": "16.0.0",
     "react": "19.2.0",
     "react-dom": "19.2.0"
