@@ -1,5 +1,7 @@
-import type { Metadata } from "next";
 import './globals.css'
+import type { Metadata } from "next";
+import "@digdir/designsystemet-css/index.css";
+import "@digdir/designsystemet-theme";
 
 export const metadata: Metadata = {
   title: "Jobbplassen",
