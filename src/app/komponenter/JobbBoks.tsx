@@ -7,14 +7,14 @@ import {
 
 export default function JobbBoks() {
   return (
-    <div className="flex justify-center items-center pt-24">
+    <div className="flex justify-center items-center mt-20">
       <Card
         data-color="neutral"
         className="max-w-[550px] border-2 border-black"
       >
         <div className="flex flex-row">
           {/* Image block */}
-          <CardBlock className="w-[250px] h-[120px] bg-red-500 m-auto" />
+          <CardBlock className="w-[300px] h-[120px] bg-red-500 m-auto" />
 
           {/* Text content */}
           <div className="flex flex-col pl-5">

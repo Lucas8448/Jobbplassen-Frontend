@@ -5,7 +5,7 @@ export default function SorterTreff() {
     <div className="relative flex items-center justify-end mt-10 w-full">
       {/* Result count */}
       <Paragraph className="absolute left-1/2 -translate-x-1/2 text-3xl">
-        1243131 treff
+        131 treff
       </Paragraph>
 
       {/* Sort by */}
