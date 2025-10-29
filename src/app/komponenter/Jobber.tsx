@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import JobbBoks from "./JobbBoks";
 
 export default function Jobber() {
   const [jobs, setJobs] = useState<any[]>([]);
@@ -28,7 +29,12 @@ export default function Jobber() {
       <h1 className="text-2xl font-bold mb-4">Ledige stillinger</h1>
       <ul className="space-y-2">
         {jobs.slice(0, 10).map((job, i) => (
-            <h1 id={job.company}>{job.company}</h1>
+          <JobbBoks
+            key={i}
+            title={job.title}
+            content={job.description}
+            employer={job.company}
+          />
         ))}
       </ul>
     </div>

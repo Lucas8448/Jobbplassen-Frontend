@@ -5,7 +5,7 @@ import {
   Paragraph,
 } from "@digdir/designsystemet-react";
 
-export default function JobbBoks() {
+export default function JobbBoks({ title, content, employer }: { title: string; content: string; employer: string }) {
   return (
     <div className="flex justify-center items-center mt-20">
       <Card
@@ -18,13 +18,9 @@ export default function JobbBoks() {
 
           {/* Text content */}
           <div className="flex flex-col pl-5">
-            <Heading>Card</Heading>
-            <Paragraph>
-              Most provide as with carried business are much better more the
-              perfected designer. Writing slightly explain desk unable at
-              supposedly about this
-            </Paragraph>
-            <Paragraph>Footer text</Paragraph>
+            <Heading>{title}</Heading>
+            <Paragraph>{content}</Paragraph>
+            <Paragraph>{employer}</Paragraph>
           </div>
         </div>
       </Card>

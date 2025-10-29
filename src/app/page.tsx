@@ -6,7 +6,6 @@ import SokStilling from "./komponenter/SokStilling";
 import SokFelt from "./komponenter/SokFelt";
 import FilterChip from "./komponenter/FilterChip";
 import SorterTreff from "./komponenter/SorterTreff";
-import JobbBoks from "./komponenter/JobbBoks";
 import Jobber from "./komponenter/Jobber";
 
 export default function Home() {
@@ -28,8 +27,6 @@ export default function Home() {
       <Divider className="relative mt-7 border-1 border-black" />
 
       <SorterTreff />
-
-      <JobbBoks />
 
       <Jobber />
     </>
