@@ -1,26 +1,80 @@
+"use client";
+
 import {
   Card,
   CardBlock,
   Heading,
   Paragraph,
 } from "@digdir/designsystemet-react";
+import { useState, useEffect } from 'react';
 
-export default function JobbBoks({ title, content, employer }: { title: string; content: string; employer: string }) {
+interface JobbBoksProps {
+  id: string;
+  title: string;
+  content: string;
+  employer: string;
+  dato: string;
+}
+
+export default function JobbBoks({ id, title, content, employer, dato }: JobbBoksProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  
+  const imageUrl = `/api/jobs/cover/${id}`;
+
+  console.log(`=== Render: id=${id}, imageUrl=${imageUrl}`);
+
+  useEffect(() => {
+    console.log(`=== useEffect: imageUrl for ${id} is:`, imageUrl);
+  }, [id, imageUrl]);
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const img = e.currentTarget;
+    console.error(`=== Image failed to load for ${id}:`, {
+      src: img.src,
+      getAttribute: img.getAttribute('src'),
+      imageUrl: imageUrl
+    });
+    setImageError(true);
+  };
+
+  const handleImageLoad = () => {
+    console.log(`=== Image loaded successfully for ${id}`);
+    setImageLoaded(true);
+  };
+
   return (
     <div className="flex justify-center items-center mt-20">
       <Card
         data-color="neutral"
-        className="max-w-[550px] border-2 border-black"
+        className="max-w-[650px] border-2 border-black mb-20"
       >
         <div className="flex flex-row">
-          {/* Image block */}
-          <CardBlock className="w-[300px] h-[120px] bg-red-500 m-auto" />
-
-          {/* Text content */}
+          <CardBlock className="relative w-[350px] h-[250px] p-0 overflow-hidden bg-gray-100 flex items-center justify-center">
+            {imageError ? (
+              <div className="text-gray-400 text-center">
+                <p>Ingen bilde</p>
+              </div>
+            ) : (
+              <img 
+                src={imageUrl}
+                alt="logo til bedrift" 
+                className="w-full h-full object-cover"
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+                style={{ display: imageLoaded ? 'block' : 'none' }}
+                crossOrigin="anonymous"
+              />
+            )}
+            {!imageLoaded && !imageError && (
+              <div className="text-gray-400">Laster bilde...</div>
+            )}
+          </CardBlock>
           <div className="flex flex-col pl-5">
-            <Heading>{title}</Heading>
-            <Paragraph>{content}</Paragraph>
-            <Paragraph>{employer}</Paragraph>
+            <Heading className="text-2xl mb-3">{title}</Heading>
+            <Paragraph className="text-xl mb-4">{content}</Paragraph>
+            <Paragraph className="text-xl">{dato}</Paragraph>
+            <Paragraph className="text-xl">{employer}</Paragraph>
           </div>
         </div>
       </Card>

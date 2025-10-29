@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import JobbBoks from "./JobbBoks";
+import SorterTreff, { SortType } from "./SorterTreff";
 
-export default function Jobber() {
+type Props = {
+  searchQuery?: string;
+};
+
+export default function Jobber({ searchQuery = "" }: Props) {
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentSort, setCurrentSort] = useState<SortType>("nyeste");
 
   useEffect(() => {
     async function fetchJobs() {
@@ -22,21 +28,78 @@ export default function Jobber() {
     fetchJobs();
   }, []);
 
+  const filterOppdatert = (filter: SortType) => {
+    setCurrentSort(filter);
+
+    // Lag en kopi av jobs (ikke muter state direkte)
+    const sortedJobs = [...jobs];
+
+    switch (filter) {
+      case "alfabetisk": // A–Å
+        sortedJobs.sort((a, b) =>
+          a.title.localeCompare(b.title, "no", { sensitivity: "base" })
+        );
+        break;
+
+      case "eldste": // Å–A
+        sortedJobs.sort((a, b) =>
+          b.title.localeCompare(a.title, "no", { sensitivity: "base" })
+        );
+        break;
+
+      case "nyeste":
+      default:
+        sortedJobs.sort(
+          (a, b) => new Date(b.posted_at).getTime() - new Date(a.posted_at).getTime()
+        );
+        break;
+    }
+
+    setJobs(sortedJobs);
+  };
+
   if (loading) return <p>Laster...</p>;
+
+  // Filter jobs based on search query
+  const filteredJobs = jobs.filter((job) => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      job.title.toLowerCase().includes(query) ||
+      job.description.toLowerCase().includes(query) ||
+      job.company.toLowerCase().includes(query)
+    );
+  });
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Ledige stillinger</h1>
+      <SorterTreff
+        antallTreff={filteredJobs.length}
+        onFilterChange={filterOppdatert}
+        currentSort={currentSort}
+      />
+
       <ul className="space-y-2">
-        {jobs.slice(0, 10).map((job, i) => (
+        {filteredJobs.slice(0, 10).map((job, i) => (
           <JobbBoks
-            key={i}
+            key={job.id || i}
+            id={job.id}
             title={job.title}
             content={job.description}
             employer={job.company}
+            dato={formaterDato(job.posted_at)}
           />
         ))}
       </ul>
     </div>
   );
+}
+
+function formaterDato(dato: string) {
+  const date = new Date(dato);
+  return date.toLocaleDateString("no-NB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 }

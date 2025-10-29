@@ -1,24 +1,55 @@
-import {
-  Search,
-  SearchInput,
-  SearchClear,
-  SearchButton,
-} from "@digdir/designsystemet-react";
+// src/app/komponenter/SokFelt.tsx
+"use client";
+import { useState } from "react";
 
-export default function SokFelt() {
+type Props = {
+  onSearchChange: (value: string) => void;
+};
+
+export default function SokFelt({ onSearchChange }: Props) {
+  const [value, setValue] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = e.target.value;
+    setValue(v);
+    onSearchChange(v);
+  };
+
+  const handleClear = () => {
+    setValue("");
+    onSearchChange("");
+  };
+
   return (
-    <div className="flex justify-center items-center mt-6 mb-10">
-    <div className="w-[400px] flex justify-center items-center border-2 border-black rounded-md text-white focus-within:border-black">
-        <Search>
-        <SearchInput 
-            aria-label="Søk" 
-            className="text-black pl-2 border-none focus:ring-0 focus:outline-none"
-        />
-        <SearchClear />
-        <SearchButton className="bg-blue-600 hover:text-gray-200" />
-        </Search>
+    <div style={{ display: "flex", gap: 8, alignItems: "center", justifyContent: "center", width: "100%" }}>
+      <input
+        aria-label="Søk"
+        value={value}
+        onChange={handleChange}
+        placeholder="Søk..."
+        style={{
+          padding: "8px 12px",
+          borderRadius: 6,
+          border: "1px solid #ccc",
+          minWidth: 200,
+        }}
+      />
+      {value && (
+        <button
+          type="button"
+          onClick={handleClear}
+          aria-label="Fjern søk"
+          style={{
+            padding: "6px 10px",
+            borderRadius: 6,
+            border: "1px solid #ddd",
+            background: "#f5f5f5",
+            cursor: "pointer",
+          }}
+        >
+          ✕
+        </button>
+      )}
     </div>
-    </div>
-
   );
 }
