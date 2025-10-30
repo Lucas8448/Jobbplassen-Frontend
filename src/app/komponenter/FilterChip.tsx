@@ -1,4 +1,3 @@
-// src/app/komponenter/FilterChip.tsx
 "use client";
 
 type Props = {

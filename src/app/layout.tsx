@@ -1,4 +1,4 @@
-import './globals.css'
+import './globals.css';
 import type { Metadata } from "next";
 import "@digdir/designsystemet-css/index.css";
 import "@digdir/designsystemet-theme";

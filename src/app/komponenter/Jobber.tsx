@@ -2,12 +2,23 @@ import { useEffect, useState } from "react";
 import JobbBoks from "./JobbBoks";
 import SorterTreff, { SortType } from "./SorterTreff";
 
+type Job = {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  job_type: string;
+  description: string;
+  posted_at: string;
+  cover_image?: Uint8Array | null;
+};
+
 type Props = {
-  searchQuery?: string;
+  readonly searchQuery?: string;
 };
 
 export default function Jobber({ searchQuery = "" }: Props) {
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentSort, setCurrentSort] = useState<SortType>("nyeste");
 

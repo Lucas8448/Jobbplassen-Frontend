@@ -7,11 +7,10 @@ import SokStilling from "./komponenter/SokStilling";
 import SokFelt from "./komponenter/SokFelt";
 import FilterChip from "./komponenter/FilterChip";
 import Jobber from "./komponenter/Jobber";
-import kobleSammen from "./komponenter/kobleSammen";
 
 export default function Home() {
   const [search, setSearch] = useState("");
-  
+
   return (
     <>
       <Header />
@@ -30,7 +29,6 @@ export default function Home() {
       )}
 
       <Divider className="relative mt-20 border-1 border-black" />
-
 
       <Jobber searchQuery={search} />
     </>

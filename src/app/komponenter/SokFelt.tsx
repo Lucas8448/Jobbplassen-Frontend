@@ -1,4 +1,3 @@
-// src/app/komponenter/SokFelt.tsx
 "use client";
 import { useState } from "react";
 

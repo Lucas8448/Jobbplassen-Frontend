@@ -6,7 +6,7 @@ import {
   Heading,
   Paragraph,
 } from "@digdir/designsystemet-react";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface JobbBoksProps {
   id: string;
@@ -22,24 +22,11 @@ export default function JobbBoks({ id, title, content, employer, dato }: JobbBok
   
   const imageUrl = `/api/jobs/cover/${id}`;
 
-  console.log(`=== Render: id=${id}, imageUrl=${imageUrl}`);
-
-  useEffect(() => {
-    console.log(`=== useEffect: imageUrl for ${id} is:`, imageUrl);
-  }, [id, imageUrl]);
-
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const img = e.currentTarget;
-    console.error(`=== Image failed to load for ${id}:`, {
-      src: img.src,
-      getAttribute: img.getAttribute('src'),
-      imageUrl: imageUrl
-    });
+  const handleImageError = () => {
     setImageError(true);
   };
 
   const handleImageLoad = () => {
-    console.log(`=== Image loaded successfully for ${id}`);
     setImageLoaded(true);
   };
 
