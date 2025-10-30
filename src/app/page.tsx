@@ -9,28 +9,43 @@ import FilterChip from "./komponenter/FilterChip";
 import Jobber from "./komponenter/Jobber";
 
 export default function Home() {
-  const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState<string[]>([]);
+
+  const handleSearchSubmit = (value: string) => {
+    if (!filters.includes(value)) {
+      setFilters((prev) => [...prev, value]);
+    }
+  };
+
+  const handleRemove = (label: string) => {
+    setFilters((prev) => prev.filter((f) => f !== label));
+  };
 
   return (
     <>
       <Header />
       <SokStilling />
 
-      <SokFelt onSearchChange={setSearch} />
+      <SokFelt onSearchSubmit={handleSearchSubmit} />
 
       <h1 className="flex justify-center items-center text-3xl font-semibold mt-10">
         Legg til filter:
       </h1>
 
-      <Divider className="my-7 border-1 border-black" />
+      <div style={{ minHeight: '100px', display: 'flex', flexDirection: 'column' }}>
+            <Divider className="my-7 border-1 border-black" />
 
-      {search && (
-        <FilterChip label={`Søk: ${search}`} onRemove={() => setSearch("")} />
-      )}
+          <div className="flex flex-wrap justify-center mt-4 min-h-[60px] ">
+            {filters.map((filter, i) => (
+              <FilterChip key={i} label={filter} onRemove={() => handleRemove(filter)} />
+            ))}
+          </div>
 
-      <Divider className="relative mt-20 border-1 border-black" />
+          <Divider className="mt-10 border-1 border-black" />
+      </div>
 
-      <Jobber searchQuery={search} />
+
+      <Jobber searchQuery={filters.join(", ")} />
     </>
   );
 }

@@ -1,41 +1,30 @@
 "use client";
+import { useState } from "react";
+import { Card, Paragraph } from "@digdir/designsystemet-react";
 
-type Props = {
+interface FilterChipProps {
   label: string;
   onRemove: () => void;
-};
+}
 
-export default function FilterChip({ label, onRemove }: Props) {
+export default function FilterChip({ label, onRemove }: FilterChipProps) {
+  const [hover, setHover] = useState(false);
+
   return (
-    <div
-      role="status"
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "6px 10px",
-        borderRadius: 999,
-        background: "#eef2ff",
-        color: "#1e293b",
-        border: "1px solid #dbeafe",
-      }}
+    <Card
+      className="flex flex-row items-center gap-2 w-fit border-2 border-black ml-3 bg-blue-600 text-white py-2 rounded-md cursor-pointer max-h-50px"
     >
-      <span>{label}</span>
+      <Paragraph>{label}</Paragraph>
       <button
-        type="button"
         onClick={onRemove}
-        aria-label={`Fjern filter ${label}`}
-        style={{
-          background: "transparent",
-          border: "none",
-          cursor: "pointer",
-          padding: 4,
-          fontSize: 14,
-          lineHeight: 1,
-        }}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className={`m-0 cursor-pointer ${
+          hover ? "text-black text-xl" : "text-white text-xl"
+        }`}
       >
-        ✕
+        X
       </button>
-    </div>
+    </Card>
   );
 }
