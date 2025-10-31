@@ -28,7 +28,14 @@ export default function Jobber({ searchQuery = "" }: Props) {
         const res = await fetch("/api/jobs");
         if (!res.ok) throw new Error("Feil ved henting av data");
         const data = await res.json();
-        setJobs(data);
+        // Sort by newest on initial load
+        const sorted = [...data].sort((a, b) => {
+          const dateA = new Date(a.posted_at).getTime();
+          const dateB = new Date(b.posted_at).getTime();
+          if (isNaN(dateA) || isNaN(dateB)) return 0;
+          return dateB - dateA;
+        });
+        setJobs(sorted);
       } catch (err) {
         console.error(err);
       } finally {
@@ -52,17 +59,23 @@ export default function Jobber({ searchQuery = "" }: Props) {
         );
         break;
 
-      case "eldste": // Å–A
-        sortedJobs.sort((a, b) =>
-          b.title.localeCompare(a.title, "no", { sensitivity: "base" })
-        );
+      case "eldste": // Oldest first
+        sortedJobs.sort((a, b) => {
+          const dateA = new Date(a.posted_at).getTime();
+          const dateB = new Date(b.posted_at).getTime();
+          if (isNaN(dateA) || isNaN(dateB)) return 0;
+          return dateA - dateB;
+        });
         break;
 
       case "nyeste":
       default:
-        sortedJobs.sort(
-          (a, b) => new Date(b.posted_at).getTime() - new Date(a.posted_at).getTime()
-        );
+        sortedJobs.sort((a, b) => {
+          const dateA = new Date(a.posted_at).getTime();
+          const dateB = new Date(b.posted_at).getTime();
+          if (isNaN(dateA) || isNaN(dateB)) return 0;
+          return dateB - dateA;
+        });
         break;
     }
 
@@ -74,8 +87,10 @@ export default function Jobber({ searchQuery = "" }: Props) {
   // Filter jobs based on search query
   const filteredJobs = jobs.filter((job) => {
     if (!searchQuery) return true;
-    const query = searchQuery.toLowerCase();
-    return (
+    const queries = searchQuery.split(",").map(q => q.trim().toLowerCase()).filter(q => q);
+    if (queries.length === 0) return true;
+    
+    return queries.some(query =>
       job.title.toLowerCase().includes(query) ||
       job.description.toLowerCase().includes(query) ||
       job.company.toLowerCase().includes(query)
@@ -91,9 +106,9 @@ export default function Jobber({ searchQuery = "" }: Props) {
       />
 
       <ul className="space-y-2">
-        {filteredJobs.slice(0, 10).map((job, i) => (
+        {filteredJobs.map((job) => (
           <JobbBoks
-            key={job.id || i}
+            key={job.id}
             id={job.id}
             title={job.title}
             content={job.description}
@@ -108,6 +123,9 @@ export default function Jobber({ searchQuery = "" }: Props) {
 
 function formaterDato(dato: string) {
   const date = new Date(dato);
+  if (isNaN(date.getTime())) {
+    return "Ugyldig dato";
+  }
   return date.toLocaleDateString("no-NB", {
     day: "2-digit",
     month: "short",

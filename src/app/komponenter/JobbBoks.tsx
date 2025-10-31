@@ -58,7 +58,7 @@ export default function JobbBoks({ id, title, content, employer, dato }: JobbBok
         <div className="absolute top-2 right-2">
           <Button 
             onClick={handleDelete}
-            className="bg-red-500 max-w-[80px] min-w-[80px] border-2 border-black bg-blue-600 text-black m-2 py-2 px-3 rounded-md cursor-pointer hover:text-gray-200"
+            className="bg-red-500 max-w-[80px] min-w-[80px] border-2 border-black text-black m-2 py-2 px-3 rounded-md cursor-pointer hover:text-gray-200"
           >
             Delete
           </Button>
