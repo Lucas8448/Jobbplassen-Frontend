@@ -1,3 +1,5 @@
+const BACKEND_URL = process.env.BACKEND_URL || "https://jobbplassen.ekstern.dev.nav.no";
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -5,7 +7,7 @@ export async function GET(
   const { id } = await params;
 
   try {
-    const backendUrl = `https://jobbplassen.ekstern.dev.nav.no/api/jobs/${id}/cover`;
+    const backendUrl = `${BACKEND_URL}/api/jobs/${id}/cover`;
     const res = await fetch(backendUrl);
 
     if (!res.ok) {

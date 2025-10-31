@@ -1,6 +1,8 @@
+const BACKEND_URL = process.env.BACKEND_URL || "https://jobbplassen.ekstern.dev.nav.no";
+
 export async function GET() {
   try {
-    const res = await fetch("https://jobbplassen.ekstern.dev.nav.no/api/jobs");
+    const res = await fetch(`${BACKEND_URL}/api/jobs`);
     if (!res.ok) {
       return Response.json({ error: "Failed to fetch jobs" }, { status: res.status });
     }
@@ -15,7 +17,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const res = await fetch("https://jobbplassen.ekstern.dev.nav.no/api/jobs", {
+    const res = await fetch(`${BACKEND_URL}/api/jobs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
