@@ -31,15 +31,22 @@ export default function JobbBoks({ id, title, content, employer, dato }: JobbBok
     setImageLoaded(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleDelete = async () => {
+    try {
       const response = await fetch(`/api/jobs/${id}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
+
+      if (!response.ok) {
+        console.error("Failed to delete job");
+        return;
+      }
+
+      // Reload the page to reflect the deletion
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting job:", error);
+    }
   };
 
   return (
@@ -50,7 +57,7 @@ export default function JobbBoks({ id, title, content, employer, dato }: JobbBok
       >
         <div className="absolute top-2 right-2">
           <Button 
-            type="submit"
+            onClick={handleDelete}
             className="bg-red-500 max-w-[80px] min-w-[80px] border-2 border-black bg-blue-600 text-black m-2 py-2 px-3 rounded-md cursor-pointer hover:text-gray-200"
           >
             Delete
