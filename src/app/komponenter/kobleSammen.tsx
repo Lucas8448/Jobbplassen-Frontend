@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div>
       {/* 👇 send funksjonen som prop */}
-      <SokFelt onSearchChange={setSearch} />
+      <SokFelt onSearchSubmit={setSearch} />
 
       {/* 👇 vis filteret hvis søk har verdi */}
       {search && (
