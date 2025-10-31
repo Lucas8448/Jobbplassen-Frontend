@@ -18,7 +18,7 @@ export default function SokFelt({ onSearchSubmit }: SokFeltProps) {
   };
 
   return (
-    <div className="flex justify-center items-center mt-6 mb-10">
+    <div className="flex justify-center items-center mt-10 mb-10">
       <form
         onSubmit={handleSubmit}
         className="w-[400px] flex justify-center items-center border-2 border-black rounded-md text-white focus-within:border-black"

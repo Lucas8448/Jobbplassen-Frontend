@@ -34,10 +34,10 @@ export default function JobbBoks({ id, title, content, employer, dato }: JobbBok
     <div className="flex justify-center items-center mt-20">
       <Card
         data-color="neutral"
-        className="max-w-[650px] border-2 border-black mb-20"
+        className="max-w-[650px] min-w-[650px] border-2 border-black mb-20"
       >
         <div className="flex flex-row">
-          <CardBlock className="relative w-[350px] h-[250px] p-0 overflow-hidden bg-gray-100 flex items-center justify-center">
+          <CardBlock className="relative min-w-[120px] max-w-[170px] h-[250px] p-0 overflow-hidden bg-gray-100 flex items-center justify-center">
             {imageError ? (
               <div className="text-gray-400 text-center">
                 <p>Ingen bilde</p>

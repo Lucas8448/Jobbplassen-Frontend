@@ -123,7 +123,7 @@ export default function Home() {
         <Button 
           type="submit"
           disabled={isSubmitting}
-          className="max-w-[100px] border-2 border-black mt-5 bg-blue-600 text-white py-2 px-3 rounded-md cursor-pointer"
+          className="max-w-[100px] border-2 border-black mt-5 bg-blue-600 text-white py-2 px-3 rounded-md cursor-pointer hover:text-gray-200"
           variant="primary"
         >
             {isSubmitting ? "Sender..." : "Send inn"}
