@@ -5,7 +5,7 @@ metadata:
   namespace: laerlinger
 spec:
   ingresses:
-    - https://jobbplassen-frontend.dev.nav.cloud.nais.io
+    - https://jobbplassen-frontend.ekstern.dev.nav.no
   image: {{image}}
   port: 8080
   replicas:
